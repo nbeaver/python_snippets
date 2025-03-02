@@ -358,9 +358,9 @@ fig.autofmt_xdate();
 import matplotlib.pyplot as plt
 ax.add_patch(
     plt.Rectangle(
-        (0,0),
-        3.0,
-        4.0,
+        (0,0), # bottom left corner (for positive width)
+        3.0, # width
+        4.0, # height
         lw=1,
         facecolor='none',
         edgecolor='black'),

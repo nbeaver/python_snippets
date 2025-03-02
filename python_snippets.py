@@ -270,6 +270,15 @@ ax.hist(numbers, bins='auto', alpha=0.8, histtype='stepfilled')
 
 ax.axvline(x=stdevs.mean(),label="mean of stdev", linestyle="--",color="blue")
 
+# Save to file
+fig.savefig(
+    "example.png",
+    bbox_inches='tight',
+    metadata = {"Title": "example title", "Author": "Firstname Lastname"},
+    dpi=200,
+    facecolor="w",
+);
+
 # Change font size of axis label.
 fig.set_xlabel("this is the x-axis", fontsize=20)
 fig.set_ylabel("this is the y-axis", fontsize=20)

@@ -374,6 +374,15 @@ height               |
 """
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Rectangle.html
 
+# Plot an arrow
+ax.arrow(
+    10.5, 5, # x,y
+    -2, 0.0, # dx, dy
+    head_width=0.1,
+    shape='full',
+    color='red',
+)
+
 # Plot with a square viewport.
 ax.set_aspect('equal')
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_aspect.html

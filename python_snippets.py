@@ -295,6 +295,11 @@ lines2, labels2 = ax2.get_legend_handles_labels()
 ax2.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
 # https://stackoverflow.com/questions/5484922/secondary-axis-with-twinx-how-to-add-to-legend/10129461#10129461
 
+# Turn off frame / border around legend
+ax.legend(frameon=False)
+# https://stackoverflow.com/questions/25540259/remove-or-adapt-border-of-frame-of-legend-using-matplotlib
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html
+
 # See current figure size and DPI settings.
 import matplotlib.pyplot as plt
 plt.rcParams['figure.figsize']

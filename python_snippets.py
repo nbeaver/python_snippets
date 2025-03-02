@@ -7,7 +7,6 @@ sys.exit(0)
 # -----------------------------------------------------------------------------
 
 # Printing and formatting
-# https://docs.python.org/3/library/string.html#format-specification-mini-language
 
 # Print without a trailing newline (Python3)
 print("no newline", end='')
@@ -15,8 +14,17 @@ for i in range(10):
     print("{i} ".format(i), end='')
 
 # Formatting
+# https://docs.python.org/3/library/string.html#format-specification-mini-language
+
+# Exponentials
 print("%e" % 2**32)
+"""
+4.294967e+09
+"""
 print('{:e}'.format(2**32))
+"""
+4.294967e+09
+"""
 
 # Percentages
 print("{:2.2%}".format(0.34567))

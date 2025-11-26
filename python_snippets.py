@@ -235,6 +235,9 @@ arr2d_no_NaNs = arr2d[~np.isnan(arr2d).any(axis=1)]
 np.set_printoptions(threshold=60) # truncate if array is longer than 60 elements
 np.set_printoptions() # reset
 
+# Loading a CSV file, skipping the first 3 rows.
+columns = np.loadtxt(filepath, skiprows=3, unpack=True, delimiter=',')
+
 # -----------------------------------------------------------------------------
 
 # matplotlib snippets
@@ -246,6 +249,8 @@ print(matplotlib.__version__)
 3.5.1
 """
 
+import matplotlib.pyplot as plt
+
 # Set Matplotlib backend with magic in Jupyter notebook.
 # %matplotlib notebook # interactive plots
 # %matplotlib inline # static plots
@@ -254,6 +259,7 @@ print(matplotlib.__version__)
 # https://stackoverflow.com/questions/4930524/how-can-i-set-the-matplotlib-backend
 
 # Basic plot in Jupyter notebook
+import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True)
 x = np.linspace(0, 10)
 y = np.sin(x)
@@ -262,6 +268,32 @@ ax.plot(x, y, '.-');
 fig.canvas.draw();
 
 plt.close(fig); del fig, ax;
+
+# Plot with error bars.
+ax.errorbar(x, y, yerr=y_err, fmt='.', capsize=2, label="error bars")
+# Customize error bar thickness.
+ax.errorbar(x, y, yerr=y_err, fmt='.', capsize=2, markersize=2, linewidth=0.6, elinewidth=0.8, linestyle='')
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.errorbar.html
+
+# Scatter plot, color based on z.
+paths = ax.scatter(x, y, c=z, cmap='plasma', s=3)
+fig.colorbar(paths, ax=ax, label='z [units]')
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html
+
+# Custom colorbar for series of line plots.
+zs = np.linspace(0, 10, num=20)
+sm_all = plt.cm.ScalarMappable(cmap='copper', norm=plt.Normalize(vmin=zs.min(), vmax=zs.max()))
+x = np.linspace(1, 5, num=50)
+ys = [x.copy()*i*0.5 + i/5 for i in range(20)]
+fig, ax = plt.subplots(constrained_layout=True)
+for i, (y,z) in enumerate(zip(ys,zs)):
+    ax.plot(x, y, '.-', color=sm_all.to_rgba(z))
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+fig.colorbar(sm_all, ax=ax, label='z')
+# https://stackoverflow.com/questions/8342549/add-colorbar-to-a-sequence-of-line-plots
+# https://stackoverflow.com/questions/26545897/drawing-a-colorbar-aside-a-line-plot-using-matplotlib
+# https://stackoverflow.com/questions/30779712/show-matplotlib-colorbar-instead-of-legend-for-multiple-plots-with-gradually-cha?noredirect=1&lq=1
 
 # Make a histogram
 bin_vals, bin_edges, patches = plt.hist(numbers, bins=n_bins)
@@ -276,18 +308,30 @@ fig.savefig(
     bbox_inches='tight',
     metadata = {"Title": "example title", "Author": "Firstname Lastname"},
     dpi=200,
-    facecolor="w",
+    facecolor="w", # white background
 );
+# For PDF, metadata fields be in:
+# 'Title', 'Producer', 'Trapped', 'ModDate', 'Subject', 'Keywords', 'CreationDate', 'Creator', 'Author'
+
+# Example notebook ID
+nb_id = 1706739890
+import time
+try:
+    print(nb_id)
+except NameError:
+    print(round(time.time()))
 
 # Change font size of axis label.
 fig.set_xlabel("this is the x-axis", fontsize=20)
 fig.set_ylabel("this is the y-axis", fontsize=20)
 
 # Instantiate a second axes that shares the same x-axis
+# Both axes are plotted on top of each other.
 fig, ax1 = plt.subplots(constrained_layout=True)
-ax2 = ax1.twinx()  
+ax2 = ax1.twinx()
 ax1.set_ylabel("first y-label")
 ax2.set_ylabel("second y-label")
+
 fig.supxlabel("x-label for both axes")
 fig.suptitle("title for both axes")
 lines1, labels1 = ax1.get_legend_handles_labels()
@@ -295,10 +339,53 @@ lines2, labels2 = ax2.get_legend_handles_labels()
 ax2.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
 # https://stackoverflow.com/questions/5484922/secondary-axis-with-twinx-how-to-add-to-legend/10129461#10129461
 
+# Extra for twinx axes:
+ax1.plot([], [], color='tab:orange') # dummy plot
+ax1.legend() # show the legend for both
+# Color axis #2 differently
+ax2.spines['right'].set_color('tab:orange')
+ax2.xaxis.label.set_color('tab:orange')
+ax2.tick_params(axis='y', colors='tab:orange')
+
+# Plot like this:
+#   ----------------
+# y1|              |
+#   |              |
+#   ----------------
+# y2|              |
+#   ----------------
+#          x
+fig, (ax1, ax2) = plt.subplots(
+    nrows=2,
+    sharex=True,
+    constrained_layout=True,
+    gridspec_kw={'height_ratios': [2, 1]}
+)
+fig.set_constrained_layout_pads(h_pad=0, hspace=0, w_pad=0, wspace=0.0)
+ax1.plot(x1, y1)
+ax1.set_ylabel("y1")
+ax2.plot(x2, y1)
+ax2.set_ylabel("y2")
+fig.supxlabel("x (both)");
+
 # Turn off frame / border around legend
 ax.legend(frameon=False)
 # https://stackoverflow.com/questions/25540259/remove-or-adapt-border-of-frame-of-legend-using-matplotlib
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html
+
+# Make legend opaque (frame must be on).
+ax.legend(framealpha=1.0, frameon=True)
+# Default framealpha = 0.8.
+# https://stackoverflow.com/questions/12848808/set-legend-symbol-opacity
+
+# Change color and size of text (default 10).
+ax.legend(labelcolor='green', fontsize=12)
+
+# Turn off frame / border / bounding box.
+ax.set_frame_on(False)
+
+# Turn off axis labels, tick marks, etc.
+ax.axis('off')
 
 # See current figure size and DPI settings.
 import matplotlib.pyplot as plt
@@ -338,7 +425,29 @@ fig.colorbar(mappable=plot, ax=ax, label='A.U.')
 # https://stackoverflow.com/questions/72035916/how-to-use-matplotlibs-pcolormesh-with-non-uniform-mesh
 # https://stackoverflow.com/questions/19572409/matplotlib-heatmap-with-changing-y-values
 
-# Invert y-axis so larger values are on the bottom 
+# Heatmap with logarithmic scaling.
+plot = ax.pcolormesh(
+    H_order_calibrated,
+    angle_order,
+    S21_logmag_stack,
+    cmap='magma',
+    norm='log'
+)
+# https://stackoverflow.com/questions/17201172/a-logarithmic-colorbar-in-matplotlib-scatter-plot
+# https://matplotlib.org/stable/users/explain/colors/colormapnorms.html#logarithmic
+
+
+# Adjust colorbar height and and how close it is to the heatmap.
+fig.colorbar(mappable=plot, ax=ax, fraction=0.046, pad=0.01, label='z [units]')
+# https://stackoverflow.com/questions/18195758/set-matplotlib-colorbar-size-to-match-graph
+
+# Add label to colorbar and change font size.
+cbar = fig.colorbar(mappable=plot, ax=ax, label='z [units]')
+cbar.ax.tick_params(labelsize=18) # font size of nmber on colorbar
+cbar.set_label(label='a label',size=15,weight='bold')
+# https://stackoverflow.com/questions/23172282/how-to-change-font-properties-of-a-matplotlib-colorbar-label
+
+# Invert y-axis so larger values are on the bottom
 axs.invert_yaxis()
 # OR
 ax.yaxis.set_inverted(True)
@@ -364,6 +473,7 @@ ax.add_patch(
         lw=1,
         facecolor='none',
         edgecolor='black'),
+        fill = False,
 )
 """
   +------------------+
@@ -397,3 +507,127 @@ def on_click(event):
     ax.scatter(event.xdata, event.ydata, color="green")
 if choose_poi:
     fig.canvas.mpl_connect('button_press_event', on_click)
+
+# Plot text in data coordinates.
+ax.text(3.4, 52, r'this is text, $\alpha^2$')
+
+# Plot text in axis coordinates.
+ax.text(0.5, 0.5, r'this is text, $\alpha^2$',
+    horizontalalignment='center',
+    verticalalignment='center',
+    transform = ax.transAxes,
+    fontsize=16,
+)
+
+# Plot text with data coordinates in x but axis coordinates in y.
+ax.text(0.5, 0.5, r'this is text, $\alpha^2$',
+    horizontalalignment='center',
+    verticalalignment='center',
+    transform = ax.transAxes,
+    fontsize=16,
+)
+# https://matplotlib.org/stable/users/explain/artists/transforms_tutorial.html
+# https://stackoverflow.com/questions/63153629/use-data-coords-for-x-axis-coords-for-y-for-text-annotations
+
+# Add annotate (with arrow) but no text.
+ax.annotate(
+    "",
+    xy=(-35, -20),
+    xytext=(-35,-20),
+    arrowprops=dict(
+        width=4,
+        headwidth=15,
+        headlength=15,
+        color='black',
+#         arrowstyle="-|>,head_width=0.4,head_length=0.8",
+#         shrinkA=0,
+#         shrinkB=0
+    ),
+    color='black',
+    fontsize=18,
+    xycoords='data',
+    textcoords='data',
+#     transform = ax.transAxes,
+)
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html
+
+# Skip part of an axis range, i.e. a gap or broken axis.
+# This is for an x-axis.
+fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+ax1.plot(x1, y1)
+ax2.plot(x2, y2)
+ax1.spines['right'].set_visible(False)
+ax2.spines['left'].set_visible(False)
+ax2.yaxis.tick_right()
+ax2.tick_params(labelright='on')
+d = .015
+kwargs = dict(transform=ax1.transAxes, color='k', clip_on=False)
+ax1.plot((1-d,1+d), (-d,+d), **kwargs)
+ax1.plot((1-d,1+d),(1-d,1+d), **kwargs)
+kwargs.update(transform=ax2.transAxes)
+ax2.plot((-d,+d), (1-d,1+d), **kwargs)
+ax2.plot((-d,+d), (-d,+d), **kwargs)
+fig.subplots_adjust(wspace=.08)
+# https://matplotlib.org/stable/gallery/subplots_axes_and_figures/broken_axis.html
+# https://stackoverflow.com/questions/5656798/is-there-a-way-to-make-a-discontinuous-axis-in-matplotlib
+
+# Add scalebar.
+from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
+fontprops = matplotlib.font_manager.FontProperties(size=18)
+scalebar = AnchoredSizeBar(
+    ax.transData,
+    20,
+    '20 μm',
+    'lower left',
+    pad=2.2,
+    color='white',
+    frameon=False,
+    size_vertical=1,
+    fontproperties=fontprops,
+)
+ax.add_artist(scalebar)
+# https://stackoverflow.com/questions/39786714/how-to-insert-scale-bar-in-a-map-in-matplotlib
+
+# Hide axes
+ax.get_xaxis().set_visible(False)
+ax.get_yaxis().set_visible(False)
+
+# Hide ticks and tick labels.
+ax.set_xticklabels([]);
+ax.set_xticks([])
+# https://stackoverflow.com/questions/2176424/hiding-axis-text-in-matplotlib-plots
+
+# Hide everything but the plotted lines.
+ax.axis('off');
+# https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-a-figure
+
+# Interactive clicking on plots in Jupyter notebooks (mouse events).
+def on_click(event):
+    global poi_n_x
+    global poi_n_y
+    global ax
+    poi_n_x = event.xdata
+    poi_n_y = event.ydata
+    ax.scatter(event.xdata, event.ydata, color="green")
+
+def on_click(event):
+    global ax
+    global OLD_AXVLINE
+    global freq
+    global near_index
+    global chosen_freqs
+    raw_value = event.xdata
+    near_index = closest_index(freq*GHz, raw_value)
+    chosen_freq = freq[near_index]
+    if len(chosen_freqs) < n_lorentzians:
+        chosen_freqs.append(chosen_freq)
+        ax.axvline(chosen_freq*GHz, color="black", linestyle='--')
+
+fig.canvas.mpl_connect('button_press_event', on_click)
+# https://matplotlib.org/stable/users/explain/figure/event_handling.html
+# https://stackoverflow.com/questions/15032638/how-to-return-a-value-from-button-press-event-matplotlib
+
+# Throw an assertion error if there are still active plots left over.
+assert plt.get_fignums() == []
+
+mat_dict = scip.io.loadmat("example.mat", simplify_cells=True)

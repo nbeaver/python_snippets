@@ -49,10 +49,12 @@ now = datetime.datetime.now().astimezone()
 print("local time: {}".format(now.strftime(ctime_with_tz)))
 print("local time: {}".format(now.strftime(long_time)))
 print("iso format: {}".format(now.isoformat()))
+print("YYYY-MM-DD: {}".format(now.strftime('%Y-%m-%d')))
 """
 local time: Fri Apr 05 10:46:26 2024 Eastern Daylight Time
 local time: Friday, April 05, 2024, 10:46:26 AM Eastern Daylight Time
 iso format: 2024-04-05T10:46:26.160316-04:00
+YYYY-MM-DD: 2024-04-05
 """
 # https://stackoverflow.com/questions/311627/how-to-print-a-date-in-a-regular-format
 # https://stackoverflow.com/questions/31299580/python-print-the-time-zone-from-strftime

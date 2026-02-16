@@ -633,3 +633,20 @@ fig.canvas.mpl_connect('button_press_event', on_click)
 assert plt.get_fignums() == []
 
 mat_dict = scip.io.loadmat("example.mat", simplify_cells=True)
+
+# Get home directory.
+import os.path
+os.path.expanduser('~') # Works on Linux, MacOS, Windows, etc.
+os.environ['HOME'] # Works on Linux and MacOS, KeyError on Windows
+os.environ['USERPROFILE'] # Works on Windows, KeyError on Linux and MacOS
+
+# Iterate over stdin.
+import sys
+for line in sys.stdin:
+    print(line)
+# Don't do this unless it is desirable to get all the input at once:
+for line in sys.stdin.readlines():
+    print(line)
+
+# https://stackoverflow.com/questions/1450393/how-do-i-read-from-stdin
+# https://stackoverflow.com/questions/11799300/sys-stdin-readlines-hangs-python-script

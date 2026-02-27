@@ -650,3 +650,30 @@ for line in sys.stdin.readlines():
 
 # https://stackoverflow.com/questions/1450393/how-do-i-read-from-stdin
 # https://stackoverflow.com/questions/11799300/sys-stdin-readlines-hangs-python-script
+
+# Sometimes we want to remove part of a string if it's present
+# and return the original string if it's not present.
+def remove_suffix(text, suffix):
+    if text.endswith(suffix):
+        return text[:-len(suffix)]
+    else:
+        return text
+
+def remove_prefix(text, prefix):
+    if text.startswith(prefix):
+        return text[len(prefix):]
+    else:
+        return text
+
+# Other times we want to remove part of a string and raise a fuss if it's not present.
+def remove_suffix2(text, suffix):
+    if text.endswith(suffix):
+        return text[:-len(suffix)]
+    else:
+        raise ValueError("string does not end with suffix: {}, {}".format(repr(suffix), repr(text)))
+
+def remove_prefix2(text, prefix):
+    if text.startswith(prefix):
+        return text[len(prefix):]
+    else:
+        raise ValueError("string does not start start with prefix: {}, {}".format(repr(prefix), repr(text)))

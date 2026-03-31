@@ -651,6 +651,15 @@ for line in sys.stdin.readlines():
 # https://stackoverflow.com/questions/1450393/how-do-i-read-from-stdin
 # https://stackoverflow.com/questions/11799300/sys-stdin-readlines-hangs-python-script
 
+# Iterate over filenames in a directory.
+for filename in os.listdir(topdir):
+    logging.debug("filename = '{}'".format(filename))
+
+# Iterate over all files in a directory recursively.
+for dirpath, dirnames, filenames in os.walk(topdir, topdown=True):
+    for filename in filenames:
+        filepath = os.path.join(dirpath, filename)
+
 # Sometimes we want to remove part of a string if it's present
 # and return the original string if it's not present.
 def remove_suffix(text, suffix):

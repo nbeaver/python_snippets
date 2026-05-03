@@ -343,6 +343,7 @@ fig.suptitle("title for both axes")
 lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
 ax2.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
+# loc options: upper, lower, center, left, right
 # https://stackoverflow.com/questions/5484922/secondary-axis-with-twinx-how-to-add-to-legend/10129461#10129461
 
 # Extra for twinx axes:

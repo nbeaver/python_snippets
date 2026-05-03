@@ -695,3 +695,18 @@ def remove_prefix2(text, prefix):
         return text[len(prefix):]
     else:
         raise ValueError("string does not start start with prefix: {}, {}".format(repr(prefix), repr(text)))
+
+# Template strings
+import string
+template_str = "${HOME}/Documents"
+template = string.Template(template_str)
+out = template.substitute(HOME=os.environ['HOME'])
+# https://docs.python.org/3/library/string.html#string.Template.substitute
+# https://stackoverflow.com/questions/11630106/advanced-string-formatting-vs-template-strings
+
+# Pandas
+
+# -----------------------------------------------------------------------------
+
+# Re-assign a single entry
+example.loc('Name', 0) = 'New name'

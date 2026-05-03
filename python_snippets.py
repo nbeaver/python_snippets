@@ -536,6 +536,10 @@ ax.text(0.5, 0.5, r'this is text, $\alpha^2$',
 # https://matplotlib.org/stable/users/explain/artists/transforms_tutorial.html
 # https://stackoverflow.com/questions/63153629/use-data-coords-for-x-axis-coords-for-y-for-text-annotations
 
+# Hide / turn off top and right axis boundaries (spines)
+ax.spines[['right', 'top']].set_visible(False)
+# https://stackoverflow.com/questions/925024/how-can-i-remove-the-top-and-right-axis
+
 # Add annotate (with arrow) but no text.
 ax.annotate(
     "",

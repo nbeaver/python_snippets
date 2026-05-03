@@ -304,6 +304,10 @@ ax.hist(numbers, bins='auto', alpha=0.8, histtype='stepfilled')
 
 ax.axvline(x=stdevs.mean(),label="mean of stdev", linestyle="--",color="blue")
 
+# Set x and y limits.
+ax.set_xlim([-5, 11])
+ax.set_ylim([0, 200])
+
 # Save to file
 fig.savefig(
     "example.png",

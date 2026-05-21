@@ -271,6 +271,10 @@ fig.canvas.draw();
 
 plt.close(fig); del fig, ax;
 
+# Plot with larger, green, unfilled markers.
+ax.plot(x, y, '.', color="green", markersize=10, fillstyle="none")
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.errorbar.html
+
 # Plot with error bars.
 ax.errorbar(x, y, yerr=y_err, fmt='.', capsize=2, label="error bars")
 # Customize error bar thickness.
@@ -316,8 +320,15 @@ fig.savefig(
     dpi=200,
     facecolor="w", # white background
 );
-# For PDF, metadata fields be in:
-# 'Title', 'Producer', 'Trapped', 'ModDate', 'Subject', 'Keywords', 'CreationDate', 'Creator', 'Author'
+# For PDF, metadata fields:
+# 'Author', 'CreationDate', 'Creator', 'Keywords', 'ModDate', 'Producer',
+# 'Subject', 'Title', 'Trapped'
+#
+# For SVG, metadata fields:
+# 'Contributor', 'Coverage', 'Creator', 'Date', 'Description', 'Format',
+# 'Identifier', 'Keywords', 'Language', 'Publisher', 'Relation', 'Rights',
+# 'Source', 'Title', 'Type'
+
 
 # Example notebook ID
 nb_id = 1706739890
@@ -461,6 +472,11 @@ ax.yaxis.set_inverted(True)
 # Note: must come after ax.set_ylim()
 # https://stackoverflow.com/questions/2051744/how-to-invert-the-x-or-y-axis
 
+# Move x-axis to top of plot.
+ax.xaxis.set_label_position('top')
+ax.xaxis.tick_top()
+# https://stackoverflow.com/questions/14406214/moving-x-axis-to-the-top-of-a-plot-in-matplotlib
+
 # Plot datetime on the x-axis
 fig, ax = plt.subplots()
 ax.plot(time_parsed, y_vals, '.-')
@@ -599,6 +615,9 @@ scalebar = AnchoredSizeBar(
 ax.add_artist(scalebar)
 # https://stackoverflow.com/questions/39786714/how-to-insert-scale-bar-in-a-map-in-matplotlib
 
+# Use custom y-tickmarks
+axis.set_yticks([2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
+
 # Hide axes
 ax.get_xaxis().set_visible(False)
 ax.get_yaxis().set_visible(False)
@@ -710,3 +729,6 @@ out = template.substitute(HOME=os.environ['HOME'])
 
 # Re-assign a single entry
 example.loc('Name', 0) = 'New name'
+
+# Get a singel row, #2 in this case.
+example.iloc[2]

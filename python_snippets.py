@@ -723,6 +723,11 @@ out = template.substitute(HOME=os.environ['HOME'])
 # https://docs.python.org/3/library/string.html#string.Template.substitute
 # https://stackoverflow.com/questions/11630106/advanced-string-formatting-vs-template-strings
 
+# Check if running in a virtual environment.
+import sys
+print(sys.prefix)
+# https://stackoverflow.com/questions/53952214/how-can-i-find-out-which-python-virtual-environment-i-am-using
+
 # Pandas
 
 # -----------------------------------------------------------------------------

@@ -89,6 +89,35 @@ class MyInfo:
 # https://stackoverflow.com/questions/32994545/standard-python-base-class-as-a-container-for-arbitrary-attributes
 # https://stackoverflow.com/questions/17595296/why-do-pythons-empty-classes-and-functions-work-as-arbitrary-data-containers-b
 
+
+# Container class with enumerated fields, throws AttributeError if extra fields are defined.
+class PhoneNumbers:
+    fields = ("cell", "home", "work")
+    __slots__ = fields
+
+    def __init__(self, cell=None, home=None, work=None):
+        self.cell = cell
+        self.home = home
+        self.work = work
+
+    def __repr__(self):
+        args_repr = [
+            "{}={}".format(attr, repr(getattr(self, attr))) for attr in self.fields
+        ]
+        self_repr = self.__class__.__name__ + "({})".format(", ".join(args_repr))
+        return self_repr
+
+    def __str__(self):
+        args_str = [
+            "{}={}".format(attr, repr(getattr(self, attr))) for attr in self.fields
+        ]
+        self_str = self.__class__.__name__ + "({})".format(", ".join(args_str))
+        return self_str
+
+
+phone_numbers = PhoneNumbers(cell="1 234-555-6789", home="1 234-555-0987")
+# phone_numbers.mobile = "1 234-555-6789" # throws AttributeError
+
 # Iterate over dictionary in value order
 for key, val in sorted(dictionary.items(), key=lambda x: x[1]):
     print(key, val)

@@ -5,7 +5,10 @@ syntax-only:
 
 lint:
 	pylint python_snippets.py
-	pyflakes python_snippets.py
+	pyflakes3 python_snippets.py
+
+format:
+	black python_snippets.py
 
 run:
 	python3 python_snippets.py

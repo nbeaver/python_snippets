@@ -5,9 +5,9 @@
 # Printing and formatting
 
 # Print without a trailing newline (Python3)
-print("no newline", end='')
+print("no newline", end="")
 for i in range(10):
-    print("{i} ".format(i), end='')
+    print("{} ".format(i), end="")
 
 # Formatting
 # https://docs.python.org/3/library/string.html#format-specification-mini-language
@@ -17,7 +17,7 @@ print("%e" % 2**32)
 """
 4.294967e+09
 """
-print('{:e}'.format(2**32))
+print("{:e}".format(2**32))
 """
 4.294967e+09
 """
@@ -29,7 +29,7 @@ print("{:2.2%}".format(0.34567))
 """
 
 # Zero padding / print integer with leading zeros
-print('{:03d}'.format(42))
+print("{:03d}".format(42))
 """
 042
 """
@@ -38,6 +38,8 @@ print("{:02d}".format(1))
 01
 """
 
+import datetime
+
 # Print current timestamp with timezone
 ctime_with_tz = "%a %b %d %H:%M:%S %Y %Z"
 long_time = "%A, %B %d, %Y, %I:%M:%S %p %Z"
@@ -45,7 +47,7 @@ now = datetime.datetime.now().astimezone()
 print("local time: {}".format(now.strftime(ctime_with_tz)))
 print("local time: {}".format(now.strftime(long_time)))
 print("iso format: {}".format(now.isoformat()))
-print("YYYY-MM-DD: {}".format(now.strftime('%Y-%m-%d')))
+print("YYYY-MM-DD: {}".format(now.strftime("%Y-%m-%d")))
 """
 local time: Fri Apr 05 10:46:26 2024 Eastern Daylight Time
 local time: Friday, April 05, 2024, 10:46:26 AM Eastern Daylight Time
@@ -72,19 +74,24 @@ print("example_str = {!r}".format(example_str))
 # -----------------------------------------------------------------------------
 
 # Get first key from a dictionary
+mydict = {"first": 42, "second": 3, "third": 12}
 next(iter(mydict))
+
 
 # Arbitrary container class
 class MyInfo:
     # Just make this a container for attributes.
     pass
 
+
 class MyInfo:
     # Give names of class members.
     def __repr__(self):
-        return self.__class__.__name__ + '(' + str(list(self.__dict__.keys())) + ')'
+        return self.__class__.__name__ + "(" + str(list(self.__dict__.keys())) + ")"
+
     def __str__(self):
-        return self.__class__.__name__ + '(' + str(list(self.__dict__.keys())) + ')'
+        return self.__class__.__name__ + "(" + str(list(self.__dict__.keys())) + ")"
+
 
 # https://stackoverflow.com/questions/32994545/standard-python-base-class-as-a-container-for-arbitrary-attributes
 # https://stackoverflow.com/questions/17595296/why-do-pythons-empty-classes-and-functions-work-as-arbitrary-data-containers-b
@@ -167,7 +174,9 @@ globals()
 locals()
 
 # See functions in 'math' module.
-import math; vars(math)
+import math
+
+vars(math)
 
 # Find out about the methods of an object, e.g. the integer 2.
 dir(2)
@@ -175,7 +184,7 @@ dir(2)
 ['__abs__', '__add__', '__and__', '__bool__',....
 """
 
-n = 2**12-1
+n = 2**12 - 1
 print(n, n.bit_length())
 """
 4095 12
@@ -200,10 +209,12 @@ print(open.__doc__)
 
 # To drop into an interactive shell from a script:
 import code
+
 code.interact(local=locals())
 
 # Using ipython/ipydb to get a better interactive shell.
 import ipdb
+
 # At point of interest:
 ipdb.set_trace()
 
@@ -212,28 +223,29 @@ ipdb.set_trace()
 # random samples
 
 # random phone number
-rand = random.randint(10**9,int('9' * 10))
+rand = random.randint(10**9, int("9" * 10))
 """
 5746885699
 """
 # Put the hyphens in
 s = str(rand)
-s[:3] +"-"+ s[3:6] +"-"+ s[6:]
+s[:3] + "-" + s[3:6] + "-" + s[6:]
 """
 '574-688-5699'
 """
 
 # Use reduce() function with a lambda expression.
-reduce(lambda x, y: x*y, [1, 2, 3, 4, 5])
+reduce(lambda x, y: x * y, [1, 2, 3, 4, 5])
 
 # Check if a module is run standalone:
-if __name__ == '__main__':
+if __name__ == "__main__":
     print("Running standalone.")
 
 
 # Check where local modules should be installed.
 
 import site
+
 print(site.USER_SITE)
 """
 '/home/nathaniel/.local/lib/python3.10/site-packages'
@@ -242,6 +254,7 @@ print(site.USER_SITE)
 
 # Note this does not adapt for e.g. anaconda environments, for that use sys.path:
 import sys
+
 print(sys.path)
 
 # -----------------------------------------------------------------------------
@@ -253,11 +266,11 @@ arr2d = np.array([[3, 6, 9, 12, 15], [4, 8, 12, 16, 20]])
 array([[ 3,  6,  9, 12, 15],
        [ 4,  8, 12, 16, 20]])
 """
-arr2d[1] # slicing along axis 0
+arr2d[1]  # slicing along axis 0
 """
 array([ 4,  8, 12, 16, 20])
 """
-arr2d[:, 2]# slicing along axis 1
+arr2d[:, 2]  # slicing along axis 1
 """
 array([ 6, 8])
 """
@@ -282,11 +295,11 @@ np.squeeze(np.zeros((2, 1, 1, 3))).shape
 arr2d_no_NaNs = arr2d[~np.isnan(arr2d).any(axis=1)]
 
 # Formatting in numpy
-np.set_printoptions(threshold=60) # truncate if array is longer than 60 elements
-np.set_printoptions() # reset
+np.set_printoptions(threshold=60)  # truncate if array is longer than 60 elements
+np.set_printoptions()  # reset
 
 # Loading a CSV file, skipping the first 3 rows.
-columns = np.loadtxt(filepath, skiprows=3, unpack=True, delimiter=',')
+columns = np.loadtxt(filepath, skiprows=3, unpack=True, delimiter=",")
 
 # -----------------------------------------------------------------------------
 
@@ -294,6 +307,7 @@ columns = np.loadtxt(filepath, skiprows=3, unpack=True, delimiter=',')
 
 # Get matplotlib version
 import matplotlib
+
 print(matplotlib.__version__)
 """
 3.5.1
@@ -310,51 +324,65 @@ import matplotlib.pyplot as plt
 
 # Basic plot in Jupyter notebook
 import matplotlib.pyplot as plt
+
 fig, ax = plt.subplots(constrained_layout=True)
 x = np.linspace(0, 10)
 y = np.sin(x)
-ax.plot(x, y, '.-');
+ax.plot(x, y, ".-")
 
-fig.canvas.draw();
+fig.canvas.draw()
 
-plt.close(fig); del fig, ax;
+plt.close(fig)
+del fig, ax
 
 # Plot with larger, green, unfilled markers.
-ax.plot(x, y, '.', color="green", markersize=10, fillstyle="none")
+ax.plot(x, y, ".", color="green", markersize=10, fillstyle="none")
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.errorbar.html
 
 # Plot with error bars.
-ax.errorbar(x, y, yerr=y_err, fmt='.', capsize=2, label="error bars")
+ax.errorbar(x, y, yerr=y_err, fmt=".", capsize=2, label="error bars")
 # Customize error bar thickness.
-ax.errorbar(x, y, yerr=y_err, fmt='.', capsize=2, markersize=2, linewidth=0.6, elinewidth=0.8, linestyle='')
+ax.errorbar(
+    x,
+    y,
+    yerr=y_err,
+    fmt=".",
+    capsize=2,
+    markersize=2,
+    linewidth=0.6,
+    elinewidth=0.8,
+    linestyle="",
+)
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.errorbar.html
 
 # Scatter plot, color based on z.
-paths = ax.scatter(x, y, c=z, cmap='plasma', s=3)
-fig.colorbar(paths, ax=ax, label='z [units]')
+paths = ax.scatter(x, y, c=z, cmap="plasma", s=3)
+fig.colorbar(paths, ax=ax, label="z [units]")
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html
 
 # Custom colorbar for series of line plots.
 zs = np.linspace(0, 10, num=20)
-sm_all = plt.cm.ScalarMappable(cmap='copper', norm=plt.Normalize(vmin=zs.min(), vmax=zs.max()))
+sm_all = plt.cm.ScalarMappable(
+    cmap="copper", norm=plt.Normalize(vmin=zs.min(), vmax=zs.max())
+)
 x = np.linspace(1, 5, num=50)
-ys = [x.copy()*i*0.5 + i/5 for i in range(20)]
+ys = [x.copy() * i * 0.5 + i / 5 for i in range(20)]
 fig, ax = plt.subplots(constrained_layout=True)
-for i, (y,z) in enumerate(zip(ys,zs)):
-    ax.plot(x, y, '.-', color=sm_all.to_rgba(z))
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-fig.colorbar(sm_all, ax=ax, label='z')
+for i, (y, z) in enumerate(zip(ys, zs)):
+    ax.plot(x, y, ".-", color=sm_all.to_rgba(z))
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+fig.colorbar(sm_all, ax=ax, label="z")
 # https://stackoverflow.com/questions/8342549/add-colorbar-to-a-sequence-of-line-plots
 # https://stackoverflow.com/questions/26545897/drawing-a-colorbar-aside-a-line-plot-using-matplotlib
 # https://stackoverflow.com/questions/30779712/show-matplotlib-colorbar-instead-of-legend-for-multiple-plots-with-gradually-cha?noredirect=1&lq=1
 
 # Make a histogram
 bin_vals, bin_edges, patches = plt.hist(numbers, bins=n_bins)
-ax.hist(numbers, bins='auto', alpha=0.8, histtype='stepfilled')
+ax.hist(numbers, bins="auto", alpha=0.8, histtype="stepfilled")
 # https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html
 
-ax.axvline(x=stdevs.mean(),label="mean of stdev", linestyle="--",color="blue")
+ax.axvline(x=stdevs.mean(), label="mean of stdev", linestyle="--", color="blue")
 
 # Set x and y limits.
 ax.set_xlim([-5, 11])
@@ -363,11 +391,11 @@ ax.set_ylim([0, 200])
 # Save to file
 fig.savefig(
     "example.png",
-    bbox_inches='tight',
-    metadata = {"Title": "example title", "Author": "Firstname Lastname"},
+    bbox_inches="tight",
+    metadata={"Title": "example title", "Author": "Firstname Lastname"},
     dpi=200,
-    facecolor="w", # white background
-);
+    facecolor="w",  # white background
+)
 # For PDF, metadata fields:
 # 'Author', 'CreationDate', 'Creator', 'Keywords', 'ModDate', 'Producer',
 # 'Subject', 'Title', 'Trapped'
@@ -381,6 +409,7 @@ fig.savefig(
 # Example notebook ID
 nb_id = 1706739890
 import time
+
 try:
     print(nb_id)
 except NameError:
@@ -401,17 +430,17 @@ fig.supxlabel("x-label for both axes")
 fig.suptitle("title for both axes")
 lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
-ax2.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
+ax2.legend(lines1 + lines2, labels1 + labels2, loc="upper right")
 # loc options: upper, lower, center, left, right
 # https://stackoverflow.com/questions/5484922/secondary-axis-with-twinx-how-to-add-to-legend/10129461#10129461
 
 # Extra for twinx axes:
-ax1.plot([], [], color='tab:orange') # dummy plot
-ax1.legend() # show the legend for both
+ax1.plot([], [], color="tab:orange")  # dummy plot
+ax1.legend()  # show the legend for both
 # Color axis #2 differently
-ax2.spines['right'].set_color('tab:orange')
-ax2.xaxis.label.set_color('tab:orange')
-ax2.tick_params(axis='y', colors='tab:orange')
+ax2.spines["right"].set_color("tab:orange")
+ax2.xaxis.label.set_color("tab:orange")
+ax2.tick_params(axis="y", colors="tab:orange")
 
 # Plot like this:
 #   ----------------
@@ -422,17 +451,14 @@ ax2.tick_params(axis='y', colors='tab:orange')
 #   ----------------
 #          x
 fig, (ax1, ax2) = plt.subplots(
-    nrows=2,
-    sharex=True,
-    constrained_layout=True,
-    gridspec_kw={'height_ratios': [2, 1]}
+    nrows=2, sharex=True, constrained_layout=True, gridspec_kw={"height_ratios": [2, 1]}
 )
 fig.set_constrained_layout_pads(h_pad=0, hspace=0, w_pad=0, wspace=0.0)
 ax1.plot(x1, y1)
 ax1.set_ylabel("y1")
 ax2.plot(x2, y1)
 ax2.set_ylabel("y2")
-fig.supxlabel("x (both)");
+fig.supxlabel("x (both)")
 
 # Turn off frame / border around legend
 ax.legend(frameon=False)
@@ -445,21 +471,22 @@ ax.legend(framealpha=1.0, frameon=True)
 # https://stackoverflow.com/questions/12848808/set-legend-symbol-opacity
 
 # Change color and size of text (default 10).
-ax.legend(labelcolor='green', fontsize=12)
+ax.legend(labelcolor="green", fontsize=12)
 
 # Turn off frame / border / bounding box.
 ax.set_frame_on(False)
 
 # Turn off axis labels, tick marks, etc.
-ax.axis('off')
+ax.axis("off")
 
 # See current figure size and DPI settings.
 import matplotlib.pyplot as plt
-plt.rcParams['figure.figsize']
+
+plt.rcParams["figure.figsize"]
 """
 [6.4, 4.8]
 """
-plt.rcParams['figure.dpi']
+plt.rcParams["figure.dpi"]
 """
 100.0
 """
@@ -467,7 +494,7 @@ plt.rcParams['figure.dpi']
 
 # Set default markersize.
 
-rcParams['lines.markersize']
+rcParams["lines.markersize"]
 """
 6.0
 """
@@ -485,32 +512,28 @@ plot = ax.pcolormesh(
     H_order_calibrated,
     angle_order,
     S21_logmag_stack,
-    cmap='magma',
+    cmap="magma",
 )
-fig.colorbar(mappable=plot, ax=ax, label='A.U.')
+fig.colorbar(mappable=plot, ax=ax, label="A.U.")
 # https://stackoverflow.com/questions/72035916/how-to-use-matplotlibs-pcolormesh-with-non-uniform-mesh
 # https://stackoverflow.com/questions/19572409/matplotlib-heatmap-with-changing-y-values
 
 # Heatmap with logarithmic scaling.
 plot = ax.pcolormesh(
-    H_order_calibrated,
-    angle_order,
-    S21_logmag_stack,
-    cmap='magma',
-    norm='log'
+    H_order_calibrated, angle_order, S21_logmag_stack, cmap="magma", norm="log"
 )
 # https://stackoverflow.com/questions/17201172/a-logarithmic-colorbar-in-matplotlib-scatter-plot
 # https://matplotlib.org/stable/users/explain/colors/colormapnorms.html#logarithmic
 
 
 # Adjust colorbar height and and how close it is to the heatmap.
-fig.colorbar(mappable=plot, ax=ax, fraction=0.046, pad=0.01, label='z [units]')
+fig.colorbar(mappable=plot, ax=ax, fraction=0.046, pad=0.01, label="z [units]")
 # https://stackoverflow.com/questions/18195758/set-matplotlib-colorbar-size-to-match-graph
 
 # Add label to colorbar and change font size.
-cbar = fig.colorbar(mappable=plot, ax=ax, label='z [units]')
-cbar.ax.tick_params(labelsize=18) # font size of nmber on colorbar
-cbar.set_label(label='a label',size=15,weight='bold')
+cbar = fig.colorbar(mappable=plot, ax=ax, label="z [units]")
+cbar.ax.tick_params(labelsize=18)  # font size of nmber on colorbar
+cbar.set_label(label="a label", size=15, weight="bold")
 # https://stackoverflow.com/questions/23172282/how-to-change-font-properties-of-a-matplotlib-colorbar-label
 
 # Invert y-axis so larger values are on the bottom
@@ -521,30 +544,32 @@ ax.yaxis.set_inverted(True)
 # https://stackoverflow.com/questions/2051744/how-to-invert-the-x-or-y-axis
 
 # Move x-axis to top of plot.
-ax.xaxis.set_label_position('top')
+ax.xaxis.set_label_position("top")
 ax.xaxis.tick_top()
 # https://stackoverflow.com/questions/14406214/moving-x-axis-to-the-top-of-a-plot-in-matplotlib
 
 # Plot datetime on the x-axis
 fig, ax = plt.subplots()
-ax.plot(time_parsed, y_vals, '.-')
+ax.plot(time_parsed, y_vals, ".-")
 ax.set_xlabel("timestamp")
-ax.set_ylabel('y_vals');
-xfmt = matplotlib.dates.DateFormatter('%Y-%m-%d %H:%M')
+ax.set_ylabel("y_vals")
+xfmt = matplotlib.dates.DateFormatter("%Y-%m-%d %H:%M")
 ax.xaxis.set_major_formatter(xfmt)
-fig.autofmt_xdate();
+fig.autofmt_xdate()
 
 # Plot a rectangle
 import matplotlib.pyplot as plt
+
 ax.add_patch(
     plt.Rectangle(
-        (0,0), # bottom left corner (for positive width)
-        3.0, # width
-        4.0, # height
+        (0, 0),  # bottom left corner (for positive width)
+        3.0,  # width
+        4.0,  # height
         lw=1,
-        facecolor='none',
-        edgecolor='black'),
-        fill = False,
+        facecolor="none",
+        edgecolor="black",
+    ),
+    fill=False,
 )
 """
   +------------------+
@@ -557,16 +582,19 @@ height               |
 
 # Plot an arrow
 ax.arrow(
-    10.5, 5, # x,y
-    -2, 0.0, # dx, dy
+    10.5,
+    5,  # x,y
+    -2,
+    0.0,  # dx, dy
     head_width=0.1,
-    shape='full',
-    color='red',
+    shape="full",
+    color="red",
 )
 
 # Plot with a square viewport.
-ax.set_aspect('equal')
+ax.set_aspect("equal")
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_aspect.html
+
 
 # Click on a point to get coordinates (in Jupyter)
 def on_click(event):
@@ -576,53 +604,61 @@ def on_click(event):
     poi_x = event.xdata
     poi_y = event.ydata
     ax.scatter(event.xdata, event.ydata, color="green")
+
+
 if choose_poi:
-    fig.canvas.mpl_connect('button_press_event', on_click)
+    fig.canvas.mpl_connect("button_press_event", on_click)
 
 # Plot text in data coordinates.
-ax.text(3.4, 52, r'this is text, $\alpha^2$')
+ax.text(3.4, 52, r"this is text, $\alpha^2$")
 
 # Plot text in axis coordinates.
-ax.text(0.5, 0.5, r'this is text, $\alpha^2$',
-    horizontalalignment='center',
-    verticalalignment='center',
-    transform = ax.transAxes,
+ax.text(
+    0.5,
+    0.5,
+    r"this is text, $\alpha^2$",
+    horizontalalignment="center",
+    verticalalignment="center",
+    transform=ax.transAxes,
     fontsize=16,
 )
 
 # Plot text with data coordinates in x but axis coordinates in y.
-ax.text(0.5, 0.5, r'this is text, $\alpha^2$',
-    horizontalalignment='center',
-    verticalalignment='center',
-    transform = ax.transAxes,
+ax.text(
+    0.5,
+    0.5,
+    r"this is text, $\alpha^2$",
+    horizontalalignment="center",
+    verticalalignment="center",
+    transform=ax.transAxes,
     fontsize=16,
 )
 # https://matplotlib.org/stable/users/explain/artists/transforms_tutorial.html
 # https://stackoverflow.com/questions/63153629/use-data-coords-for-x-axis-coords-for-y-for-text-annotations
 
 # Hide / turn off top and right axis boundaries (spines)
-ax.spines[['right', 'top']].set_visible(False)
+ax.spines[["right", "top"]].set_visible(False)
 # https://stackoverflow.com/questions/925024/how-can-i-remove-the-top-and-right-axis
 
 # Add annotate (with arrow) but no text.
 ax.annotate(
     "",
     xy=(-35, -20),
-    xytext=(-35,-20),
+    xytext=(-35, -20),
     arrowprops=dict(
         width=4,
         headwidth=15,
         headlength=15,
-        color='black',
-#         arrowstyle="-|>,head_width=0.4,head_length=0.8",
-#         shrinkA=0,
-#         shrinkB=0
+        color="black",
+        #         arrowstyle="-|>,head_width=0.4,head_length=0.8",
+        #         shrinkA=0,
+        #         shrinkB=0
     ),
-    color='black',
+    color="black",
     fontsize=18,
-    xycoords='data',
-    textcoords='data',
-#     transform = ax.transAxes,
+    xycoords="data",
+    textcoords="data",
+    #     transform = ax.transAxes,
 )
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html
 
@@ -631,31 +667,32 @@ ax.annotate(
 fig, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
 ax1.plot(x1, y1)
 ax2.plot(x2, y2)
-ax1.spines['right'].set_visible(False)
-ax2.spines['left'].set_visible(False)
+ax1.spines["right"].set_visible(False)
+ax2.spines["left"].set_visible(False)
 ax2.yaxis.tick_right()
-ax2.tick_params(labelright='on')
-d = .015
-kwargs = dict(transform=ax1.transAxes, color='k', clip_on=False)
-ax1.plot((1-d,1+d), (-d,+d), **kwargs)
-ax1.plot((1-d,1+d),(1-d,1+d), **kwargs)
+ax2.tick_params(labelright="on")
+d = 0.015
+kwargs = dict(transform=ax1.transAxes, color="k", clip_on=False)
+ax1.plot((1 - d, 1 + d), (-d, +d), **kwargs)
+ax1.plot((1 - d, 1 + d), (1 - d, 1 + d), **kwargs)
 kwargs.update(transform=ax2.transAxes)
-ax2.plot((-d,+d), (1-d,1+d), **kwargs)
-ax2.plot((-d,+d), (-d,+d), **kwargs)
-fig.subplots_adjust(wspace=.08)
+ax2.plot((-d, +d), (1 - d, 1 + d), **kwargs)
+ax2.plot((-d, +d), (-d, +d), **kwargs)
+fig.subplots_adjust(wspace=0.08)
 # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/broken_axis.html
 # https://stackoverflow.com/questions/5656798/is-there-a-way-to-make-a-discontinuous-axis-in-matplotlib
 
 # Add scalebar.
 from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
+
 fontprops = matplotlib.font_manager.FontProperties(size=18)
 scalebar = AnchoredSizeBar(
     ax.transData,
     20,
-    '20 μm',
-    'lower left',
+    "20 μm",
+    "lower left",
     pad=2.2,
-    color='white',
+    color="white",
     frameon=False,
     size_vertical=1,
     fontproperties=fontprops,
@@ -671,13 +708,14 @@ ax.get_xaxis().set_visible(False)
 ax.get_yaxis().set_visible(False)
 
 # Hide ticks and tick labels.
-ax.set_xticklabels([]);
+ax.set_xticklabels([])
 ax.set_xticks([])
 # https://stackoverflow.com/questions/2176424/hiding-axis-text-in-matplotlib-plots
 
 # Hide everything but the plotted lines.
-ax.axis('off');
+ax.axis("off")
 # https://stackoverflow.com/questions/14908576/how-to-remove-frame-from-a-figure
+
 
 # Interactive clicking on plots in Jupyter notebooks (mouse events).
 def on_click(event):
@@ -688,6 +726,7 @@ def on_click(event):
     poi_n_y = event.ydata
     ax.scatter(event.xdata, event.ydata, color="green")
 
+
 def on_click(event):
     global ax
     global OLD_AXVLINE
@@ -695,13 +734,14 @@ def on_click(event):
     global near_index
     global chosen_freqs
     raw_value = event.xdata
-    near_index = closest_index(freq*GHz, raw_value)
+    near_index = closest_index(freq * GHz, raw_value)
     chosen_freq = freq[near_index]
     if len(chosen_freqs) < n_lorentzians:
         chosen_freqs.append(chosen_freq)
-        ax.axvline(chosen_freq*GHz, color="black", linestyle='--')
+        ax.axvline(chosen_freq * GHz, color="black", linestyle="--")
 
-fig.canvas.mpl_connect('button_press_event', on_click)
+
+fig.canvas.mpl_connect("button_press_event", on_click)
 # https://matplotlib.org/stable/users/explain/figure/event_handling.html
 # https://stackoverflow.com/questions/15032638/how-to-return-a-value-from-button-press-event-matplotlib
 
@@ -712,12 +752,14 @@ mat_dict = scip.io.loadmat("example.mat", simplify_cells=True)
 
 # Get home directory.
 import os.path
-os.path.expanduser('~') # Works on Linux, MacOS, Windows, etc.
-os.environ['HOME'] # Works on Linux and MacOS, KeyError on Windows
-os.environ['USERPROFILE'] # Works on Windows, KeyError on Linux and MacOS
+
+os.path.expanduser("~")  # Works on Linux, MacOS, Windows, etc.
+os.environ["HOME"]  # Works on Linux and MacOS, KeyError on Windows
+os.environ["USERPROFILE"]  # Works on Windows, KeyError on Linux and MacOS
 
 # Iterate over stdin.
 import sys
+
 for line in sys.stdin:
     print(line)
 # Don't do this unless it is desirable to get all the input at once:
@@ -736,43 +778,56 @@ for dirpath, dirnames, filenames in os.walk(topdir, topdown=True):
     for filename in filenames:
         filepath = os.path.join(dirpath, filename)
 
+
 # Sometimes we want to remove part of a string if it's present
 # and return the original string if it's not present.
 def remove_suffix(text, suffix):
     if text.endswith(suffix):
-        return text[:-len(suffix)]
+        return text[: -len(suffix)]
     else:
         return text
 
+
 def remove_prefix(text, prefix):
     if text.startswith(prefix):
-        return text[len(prefix):]
+        return text[len(prefix) :]
     else:
         return text
+
 
 # Other times we want to remove part of a string and raise a fuss if it's not present.
 def remove_suffix2(text, suffix):
     if text.endswith(suffix):
-        return text[:-len(suffix)]
+        return text[: -len(suffix)]
     else:
-        raise ValueError("string does not end with suffix: {}, {}".format(repr(suffix), repr(text)))
+        raise ValueError(
+            "string does not end with suffix: {}, {}".format(repr(suffix), repr(text))
+        )
+
 
 def remove_prefix2(text, prefix):
     if text.startswith(prefix):
-        return text[len(prefix):]
+        return text[len(prefix) :]
     else:
-        raise ValueError("string does not start start with prefix: {}, {}".format(repr(prefix), repr(text)))
+        raise ValueError(
+            "string does not start start with prefix: {}, {}".format(
+                repr(prefix), repr(text)
+            )
+        )
+
 
 # Template strings
 import string
+
 template_str = "${HOME}/Documents"
 template = string.Template(template_str)
-out = template.substitute(HOME=os.environ['HOME'])
+out = template.substitute(HOME=os.environ["HOME"])
 # https://docs.python.org/3/library/string.html#string.Template.substitute
 # https://stackoverflow.com/questions/11630106/advanced-string-formatting-vs-template-strings
 
 # Check if running in a virtual environment.
 import sys
+
 print(sys.prefix)
 # https://stackoverflow.com/questions/53952214/how-can-i-find-out-which-python-virtual-environment-i-am-using
 

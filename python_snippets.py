@@ -126,8 +126,19 @@ for key, val in sorted(mydict.items(), key=lambda x: x[1]):
 
 # Iterable unpacking in function calls.
 mylist = [1, 2, 3]
-mydict = {1: 'a', 2: 'b', 3: 'c'}
-print(*mylist, **mydict)
+mydict = {"arg1": "a", "arg2": 12, "arg3": 2.71}
+
+
+def my_print(*args, **kwargs):
+    print("args = {}".format(repr(args)))
+    print("kwargs = {}".format(repr(kwargs)))
+
+
+my_print(*mylist, **mydict)
+# Output:
+# args = (1, 2, 3)
+# kwargs = {'arg1': 'a', 'arg2': 12, 'arg3': 2.71}
+
 # Note: it's hard to get help on iterable unpacking / starred expressions with '*'
 # since help('*') is for the multiplication operator.
 # https://docs.python.org/3/reference/expressions.html

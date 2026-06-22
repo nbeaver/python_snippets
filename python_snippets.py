@@ -780,8 +780,27 @@ print(sys.prefix)
 
 # -----------------------------------------------------------------------------
 
-# Re-assign a single entry
-example.loc('Name', 0) = 'New name'
+import pandas as pd
 
-# Get a singel row, #2 in this case.
-example.iloc[2]
+example_df = pd.DataFrame(
+    {
+        "Name": ["John", "Paul", "George", "Pete"],
+        "Instrument": ["guitar", "bass", "guitar", "drums"],
+    }
+)
+
+# Get a single row, index 3 in this case.
+example_df.iloc[3]
+# Name          Pete
+# Instrument    drums
+# Name: 3, dtype: str
+
+# Re-assign a single entry
+example_df.loc[3, "Name"] = "Ringo"
+# Name          Ringo
+# Instrument    drums
+# Name: 3, dtype: str
+
+# Rename a column.
+example_df.rename(columns={"Name": "Given Name"})
+# https://stackoverflow.com/questions/19758364/rename-specific-columns-in-pandas

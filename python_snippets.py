@@ -119,7 +119,7 @@ phone_numbers = PhoneNumbers(cell="1 234-555-6789", home="1 234-555-0987")
 # phone_numbers.mobile = "1 234-555-6789" # throws AttributeError
 
 # Iterate over dictionary in value order
-for key, val in sorted(dictionary.items(), key=lambda x: x[1]):
+for key, val in sorted(mydict.items(), key=lambda x: x[1]):
     print(key, val)
 
 # https://stackoverflow.com/questions/674509/how-do-i-iterate-over-a-python-dictionary-ordered-by-values

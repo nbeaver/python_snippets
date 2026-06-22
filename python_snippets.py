@@ -1,9 +1,5 @@
 #! /usr/bin/env python3
 
-import sys
-sys.exit(0)
-# Put this at the top so executing this does nothing.
-
 # -----------------------------------------------------------------------------
 
 # Printing and formatting

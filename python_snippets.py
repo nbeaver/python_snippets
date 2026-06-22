@@ -57,6 +57,18 @@ YYYY-MM-DD: 2024-04-05
 # https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
 # https://strftime.org/
 
+# Printing unambiguous representation of a string.
+example_str = "\"this\tis some\t text'"
+print("example_str = {}".format(repr(example_str)))
+# example_str = '"this\tis some\t text\''
+# Without repr:
+# example_str = "this	is some	 text'
+# https://docs.python.org/3/library/functions.html#repr
+
+# Equivalent using format string syntax:
+print("example_str = {!r}".format(example_str))
+# https://docs.python.org/3/library/string.html#format-string-syntax
+
 # -----------------------------------------------------------------------------
 
 # Get first key from a dictionary

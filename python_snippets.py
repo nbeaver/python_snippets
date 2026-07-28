@@ -844,20 +844,36 @@ example_df = pd.DataFrame(
     {
         "Name": ["John", "Paul", "George", "Pete"],
         "Instrument": ["guitar", "bass", "guitar", "drums"],
+        "Birth year": [1940, 1942, 1943, 1941],
     }
 )
 
+# Get a single column, birth year in this case.
+example_df["Birth year"]
+# 0    1940
+# 1    1942
+# 2    1943
+# 3    1941
+# Name: Birth year, dtype: int64
+
+# Convert pandas.Series to numpy array
+example_df["Birth year"].to_numpy()
+# array([1940, 1942, 1943, 1941])
+
 # Get a single row, index 3 in this case.
 example_df.iloc[3]
-# Name          Pete
+# Name           Pete
 # Instrument    drums
-# Name: 3, dtype: str
+# Birth year     1941
+# Name: 3, dtype: object
 
 # Re-assign a single entry
 example_df.loc[3, "Name"] = "Ringo"
+example_df.loc[3, "Birth year"] = 1940
 # Name          Ringo
 # Instrument    drums
-# Name: 3, dtype: str
+# Birth year     1940
+# Name: 3, dtype: object
 
 # Rename a column.
 example_df.rename(columns={"Name": "Given Name"})

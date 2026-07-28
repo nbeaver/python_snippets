@@ -322,6 +322,9 @@ import matplotlib.pyplot as plt
 # https://matplotlib.org/stable/users/explain/figure/backends.html
 # https://stackoverflow.com/questions/4930524/how-can-i-set-the-matplotlib-backend
 
+# Show text file in a Jupyter notebook.
+# %pycat readme.txt
+
 # Basic plot in Jupyter notebook
 import matplotlib.pyplot as plt
 

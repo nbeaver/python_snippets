@@ -865,6 +865,9 @@ example_df["Birth year"]
 example_df["Birth year"].to_numpy()
 # array([1940, 1942, 1943, 1941])
 
+# Get index corresponding to a condition.
+pete_i, = example_df.index[example_df['Name'] == 'Pete'].tolist()
+
 # Get a single row, index 3 in this case.
 example_df.iloc[3]
 # Name           Pete
@@ -883,3 +886,16 @@ example_df.loc[3, "Birth year"] = 1940
 # Rename a column.
 example_df.rename(columns={"Name": "Given Name"})
 # https://stackoverflow.com/questions/19758364/rename-specific-columns-in-pandas
+
+# Iterate over rows.
+df = pd.DataFrame({'c1': [10, 11, 12], 'c2': [100, 110, 120]})
+df = df.reset_index()  # Make sure indexes pair with number of rows
+for index, row in df.iterrows():
+    print(row['c1'], row['c2'])
+# https://stackoverflow.com/questions/16476924/how-can-i-iterate-over-rows-in-a-pandas-dataframe
+
+# Read in a CSV with headers on first row.
+df = pd.read_csv("csv-file-with-headers.csv")
+
+# Read in a TSV without headers.
+df = pd.read_csv("no-headers.tsv", sep='\t', header=None, names=["x", "y"])

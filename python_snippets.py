@@ -316,9 +316,14 @@ print(matplotlib.__version__)
 import matplotlib.pyplot as plt
 
 # Set Matplotlib backend with magic in Jupyter notebook.
-# %matplotlib notebook # interactive plots
-# %matplotlib inline # static plots
-# %matplotlib nbagg # output only
+# interactive plots, Jupyter version 7+
+# %matplotlib widget
+# # interactive plots, Jupyter version < 7
+# %matplotlib notebook
+# # static plots
+# %matplotlib inline
+# # output only
+# %matplotlib nbagg
 # https://matplotlib.org/stable/users/explain/figure/backends.html
 # https://stackoverflow.com/questions/4930524/how-can-i-set-the-matplotlib-backend
 

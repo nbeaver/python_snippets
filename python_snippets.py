@@ -899,3 +899,9 @@ df = pd.read_csv("csv-file-with-headers.csv")
 
 # Read in a TSV without headers.
 df = pd.read_csv("no-headers.tsv", sep='\t', header=None, names=["x", "y"])
+
+# Save dataframe to TSV.
+df.to_csv('output.tsv', sep='\t', index=False)
+
+# Sum a column.
+df['column1'].sum()

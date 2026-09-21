@@ -326,6 +326,11 @@ import matplotlib.pyplot as plt
 # %matplotlib nbagg
 # https://matplotlib.org/stable/users/explain/figure/backends.html
 # https://stackoverflow.com/questions/4930524/how-can-i-set-the-matplotlib-backend
+# Check version like so:
+# !jupyter --version
+# Install packages:
+# pip install ipympl ipywidgets
+import matplotlib; matplotlib.get_backend()
 
 # Show text file in a Jupyter notebook.
 # %pycat readme.txt

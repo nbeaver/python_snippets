@@ -791,6 +791,29 @@ for dirpath, dirnames, filenames in os.walk(topdir, topdown=True):
     for filename in filenames:
         filepath = os.path.join(dirpath, filename)
 
+# Split by pathname component.
+head, tail = os.path.split(filepath)
+# Examples:
+# os.path.split("/usr/share/dict/words")
+# ('/usr/share/dict', 'words')
+# os.path.split("/usr/share/dict/")
+# ('/usr/share/dict', '')
+# https://docs.python.org/3/library/os.path.html#os.path.split
+
+# Get basename, same as tail for os.path.split.
+filename = os.path.basename(filepath)
+# https://docs.python.org/3/library/os.path.html#os.path.basename
+
+# Get dirname, same as head for os.path.split.
+parent_directory = os.path.dirname(filepath)
+# https://docs.python.org/3/library/os.path.html#os.path.dirname
+
+# Split into root and file extension.
+root, ext = os.path.splitext(filename)
+# Examples:
+# os.path.splitext("/etc/resolv.conf")
+# ('/etc/resolv', '.conf')
+# https://docs.python.org/3/library/os.path.html#os.path.splitext
 
 # Sometimes we want to remove part of a string if it's present
 # and return the original string if it's not present.
